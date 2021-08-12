@@ -3,11 +3,9 @@
 if (! function_exists('app')) {
 
     /**
-     * Gets a static accessor to the \Illuminate\Support\Str class.
-     * When a non-null value is passed the function behaves like Str::of()
+     * Gets the application kernal instance
      *
-     * @param string|null $string
-     * @return mixed
+     * @return \Roublez\Isin\Core\Kernel
      */
     function app () : \Roublez\Isin\Core\Kernel {
         return \Roublez\Isin\Core\Kernel::singleton();
