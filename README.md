@@ -1,1 +1,1 @@
-# isin-scraper
+# isin-collector

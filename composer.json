@@ -1,10 +1,10 @@
 {
-    "name": "roublez/isin-scraper",
-    "description": "A command-line interface to scrape, parse and format ISINs.",
+    "name": "roublez/isin-collector",
+    "description": "A command-line interface to download, parse and format ISIN datasets.",
     "keywords": [
-        "ISIN", "scraper", "parser"
+        "isin", "downloader", "parser", "formatter"
     ],
-    "homepage": "https://github.com/roublez/isin-scraper",
+    "homepage": "https://github.com/roublez/isin-collector",
     "license": "MIT",
     "authors": [
         {
@@ -15,7 +15,7 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/roublez/isin-scraper/issues"
+        "issues": "https://github.com/roublez/isin-collector/issues"
     },
     "require": {
         "php": ">=8.0",

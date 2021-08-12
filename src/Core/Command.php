@@ -3,9 +3,25 @@
 namespace Roublez\Isin\Core;
 
 use Symfony\Component\Console\Command\Command as BaseCommand;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
-class Command extends BaseCommand
-{
+class Command extends BaseCommand {
+
+    /**
+     * The input interface
+     *
+     * @var InputInterface
+     */
+    protected InputInterface $input;
+
+    /**
+     * The output interface
+     *
+     * @var OutputInterface
+     */
+    protected OutputInterface $output;
+
     /**
      * Constructs the base command
      */
@@ -13,7 +29,28 @@ class Command extends BaseCommand
         parent::__construct($this->signature());
 
         $this->setDescription($this->description());
-        $this->setCode(fn () => $this->handle());
+    }
+
+    /**
+     * Handles the command
+     *
+     * @return integer
+     */
+    protected function handle () : int {
+        return self::SUCCESS;
+    }
+
+    /**
+     * Executes the command
+     *
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return integer
+     */
+    protected function execute (InputInterface $input, OutputInterface $output) : int {
+        $this->input = $input;
+        $this->output = $output;
+        return $this->handle();
     }
 
     /**
@@ -32,5 +69,9 @@ class Command extends BaseCommand
      */
     protected function description () : string {
         return $this->description;
+    }
+
+    protected function input (string $name) : mixed {
+        return $this->input->getArgument($name);
     }
 }

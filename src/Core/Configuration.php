@@ -4,8 +4,8 @@ namespace Roublez\Isin\Core;
 
 use Symfony\Component\Yaml\Yaml;
 
-class Configuration
-{
+class Configuration {
+
     /**
      * The configuration data
      */
@@ -17,9 +17,7 @@ class Configuration
      * @param string $path The relative path to the configuration file
      */
     public function __construct (string $path) {
-        $this->data = Yaml::parseFile($path) ?? [
-            'foo' => 'bar'
-        ];
+        $this->data = Yaml::parseFile($path) ?? [];
     }
 
     /**

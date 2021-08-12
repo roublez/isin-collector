@@ -5,13 +5,13 @@ namespace Roublez\Isin\Core;
 use Symfony\Component\Console\Application;
 use NunoMaduro\Collision\Provider as CollisionProvider;
 
-class Kernel
-{
+class Kernel {
+
     /**
      * The application name
      * @var string
      */
-    private const NAME = 'ISIN Scraper';
+    private const NAME = 'ISIN Collect';
 
     /**
      * The application version
