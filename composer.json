@@ -1,0 +1,39 @@
+{
+    "name": "roublez/isin-scraper",
+    "description": "A command-line interface to scrape, parse and format ISINs.",
+    "keywords": [
+        "ISIN", "scraper", "parser"
+    ],
+    "homepage": "https://github.com/roublez/isin-scraper",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dennis Prudlo",
+            "email": "mail@dennisprudlo.com",
+            "homepage": "https://dennisprudlo.com",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/roublez/isin-scraper/issues"
+    },
+    "require": {
+        "php": ">=8.0",
+        "symfony/console": "^5.3",
+        "nunomaduro/collision": "^5.5",
+        "symfony/yaml": "^5.3",
+        "illuminate/collections": "^8.51"
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^5.3"
+    },
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "Roublez\\Isin\\": "src"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    }
+}
