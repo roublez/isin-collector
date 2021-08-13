@@ -1,5 +1,7 @@
 <?php
 
+use Roublez\Isin\Sources\AbstractSource;
+
 if (! function_exists('app')) {
 
     /**
@@ -36,5 +38,23 @@ if (! function_exists('config')) {
      */
     function config (string|array|int|null $key = null, mixed $value = null) : mixed {
         return app()->config($key, $value);
+    }
+}
+
+if (! function_exists('source')) {
+
+    /**
+     * Gets the class of the identified source
+     *
+     * @param string $identifier
+     * @return AbstractSource
+     */
+    function source (string $identifier) : AbstractSource {
+        $components = collect(explode('.', $identifier))->map(function ($component) {
+            return collect(explode('-', $component))->map(fn ($subcomponent) => ucwords($subcomponent))->join('');
+        });
+
+        $source = '\\'.collect(['Roublez', 'Isin', 'Sources'])->merge($components)->join('\\');
+        return new $source;
     }
 }

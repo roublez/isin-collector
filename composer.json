@@ -22,7 +22,9 @@
         "symfony/console": "^5.3",
         "nunomaduro/collision": "^5.5",
         "symfony/yaml": "^5.3",
-        "illuminate/collections": "^8.51"
+        "illuminate/collections": "^8.51",
+        "guzzlehttp/guzzle": "^7.3",
+        "illuminate/support": "^8.54"
     },
     "require-dev": {
         "symfony/var-dumper": "^5.3"

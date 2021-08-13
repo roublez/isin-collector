@@ -2,7 +2,8 @@
 
 namespace Roublez\Isin\Sources;
 
-use Roublez\Isin\Collectors\Collectable;
+use Roublez\Isin\Collectors\AbstractCollector;
+use Illuminate\Support\Str;
 
 abstract class AbstractSource {
 
@@ -11,6 +12,93 @@ abstract class AbstractSource {
      *
      * @return Collectable
      */
-    abstract function collector () : Collectable;
+    abstract function collector () : AbstractCollector;
 
+    /**
+     * Gets the identifier of the source
+     *
+     * @return string
+     */
+    public function identifier () : string {
+        return collect(explode('\\', $this::class))
+            ->reject(fn (string $part) => in_array($part, [ 'Roublez', 'Isin', 'Sources' ]))
+            ->map(fn (string $part) => Str::kebab($part))
+            ->join('.');
+    }
+
+    /**
+     * Gets the storage path for the source and creates
+     * the directory along the way
+     *
+     * @return resource
+     */
+    public function storagePath (string $filename) : string {
+        $folders = explode('.', $this->identifier());
+        array_unshift($folders, 'storage');
+
+        $path = path(...$folders);
+        if (! is_dir($path)) {
+            mkdir($path, 0755, true);
+        }
+
+        array_push($folders, $filename);
+        return path(...$folders);
+    }
+
+    /**
+     * Collects the data from the source
+     *
+     * @return void
+     */
+    public function collect () : void {
+        tap($this->collector(), fn (AbstractCollector $collector) => $collector->setSource($this))->collect();
+    }
+    /**
+     * Executes the source handling
+     *
+     * @return void
+     */
+    public function run () : void {
+        $this->collect();
+    }
+
+    /**
+     * Invokes the run function
+     *
+     * @return void
+     */
+    public function __invoke () {
+        $this->run();
+    }
+
+    public static function all () : Collection {
+        return collect(glob(path('src', 'Sources', '**', '*.php')))
+            ->map(function ($absolutePath) {
+
+                //
+                // Get the search string for splitting the string
+                $search = 'src'.\DIRECTORY_SEPARATOR.'Sources'.\DIRECTORY_SEPARATOR;
+
+                //
+                // Get the position where the custom folder structure begins
+                $position = strpos($absolutePath, $search);
+
+                //
+                // Get the path components
+                $components = explode(DIRECTORY_SEPARATOR, substr($absolutePath, $position + strlen($search)));
+
+                $source = join('\\', [
+                    'Roublez',
+                    'Isin',
+                    'Sources',
+                    ...$components
+                ]);
+
+                //
+                // Remove the file extension ".php" from the end of the string
+                $source = substr($source, 0, strlen($source) - 4);
+
+                return new $source;
+            });
+    }
 }

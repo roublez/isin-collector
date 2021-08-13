@@ -3,6 +3,7 @@
 namespace Roublez\Isin\Commands;
 
 use Roublez\Isin\Core\Command;
+use Roublez\Isin\Sources\AbstractSource;
 
 class CollectAll extends Command {
 
@@ -26,6 +27,10 @@ class CollectAll extends Command {
      * @return void
      */
     public function handle () : int {
+        AbstractSource::all()
+            ->each(function (AbstractSource $source) {
+                $source->collect();
+            });
 
         return self::SUCCESS;
     }

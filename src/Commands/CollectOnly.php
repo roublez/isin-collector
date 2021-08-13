@@ -36,14 +36,7 @@ class CollectOnly extends Command {
      * @return void
      */
     public function handle () : int {
-
-        $components = collect(explode('.', $this->input('source')))->map(function ($component) {
-            return collect(explode('-', $component))->map(fn ($subcomponent) => ucwords($subcomponent))->join('');
-        });
-
-        $source = '\\'.collect(['Roublez', 'Isin', 'Sources'])->merge($components)->join('\\');
-
-        (new $source)->collector()->collect();
+        source($this->input('source'))();
 
         return self::SUCCESS;
     }
