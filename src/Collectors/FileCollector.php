@@ -25,7 +25,7 @@ class FileCollector extends AbstractCollector {
      *
      * @var Client
      */
-    protected Client $client;
+    private Client $client;
 
     /**
      * Constructs the file collector
@@ -37,6 +37,24 @@ class FileCollector extends AbstractCollector {
         $this->url = $url;
         $this->filename = $filename;
         $this->client = new Client;
+    }
+
+    /**
+     * Gets the url of the source
+     *
+     * @return string
+     */
+    public function getUrl () : string {
+        return $this->url;
+    }
+
+    /**
+     * Gets the filename of the target file
+     *
+     * @return string
+     */
+    public function getFilename () : string {
+        return $this->filename;
     }
 
     /**

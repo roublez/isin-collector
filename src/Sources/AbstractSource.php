@@ -3,7 +3,9 @@
 namespace Roublez\Isin\Sources;
 
 use Roublez\Isin\Collectors\AbstractCollector;
+use Roublez\Isin\Parsers\AbstractParser;
 use Illuminate\Support\Str;
+use Illuminate\Support\Collection;
 
 abstract class AbstractSource {
 
@@ -13,6 +15,13 @@ abstract class AbstractSource {
      * @return Collectable
      */
     abstract function collector () : AbstractCollector;
+
+    /**
+     * Gets the parser instance
+     *
+     * @return AbstractParser
+     */
+    abstract function parser () : AbstractParser;
 
     /**
      * Gets the identifier of the source
@@ -53,6 +62,16 @@ abstract class AbstractSource {
     public function collect () : void {
         tap($this->collector(), fn (AbstractCollector $collector) => $collector->setSource($this))->collect();
     }
+
+    /**
+     * Parses the data from the source
+     *
+     * @return void
+     */
+    public function parse () : void {
+        tap($this->parser(), fn (AbstractParser $parser) => $parser->setSource($this))->parse();
+    }
+
     /**
      * Executes the source handling
      *
@@ -60,6 +79,7 @@ abstract class AbstractSource {
      */
     public function run () : void {
         $this->collect();
+        $this->parse();
     }
 
     /**

@@ -30,6 +30,9 @@ class CollectAll extends Command {
         AbstractSource::all()
             ->each(function (AbstractSource $source) {
                 $source->collect();
+            })
+            ->each(function (AbstractSource $source) {
+                $source->parse();
             });
 
         return self::SUCCESS;
